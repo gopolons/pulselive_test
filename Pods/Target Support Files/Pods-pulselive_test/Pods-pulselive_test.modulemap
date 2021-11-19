@@ -1,0 +1,6 @@
+framework module Pods_pulselive_test {
+  umbrella header "Pods-pulselive_test-umbrella.h"
+
+  export *
+  module * { export * }
+}
