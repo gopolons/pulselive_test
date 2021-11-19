@@ -9,6 +9,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+//  This view controller receives data prior to segue from main view controller and displays article detail
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var id: UILabel!

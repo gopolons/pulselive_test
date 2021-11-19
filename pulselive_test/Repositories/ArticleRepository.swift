@@ -5,7 +5,10 @@
 //  Created by Georgy Polonskiy on 18/11/2021.
 //
 
+
 import Foundation
+
+//Article repository is an interface used for fetching the data through network service (or otherwise, for testing purposes)
 
 protocol ArticleRepositoryProtocol {
     func fetchData(id: Int, completion: @escaping (ArticleExtended) -> Void)

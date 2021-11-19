@@ -9,6 +9,8 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+//Network API fetches the data from the remote depository
+
 protocol NetworkAPIProtocol {
     func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void)
     

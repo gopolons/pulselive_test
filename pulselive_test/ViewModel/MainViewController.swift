@@ -8,6 +8,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
+//  This view controller acts as a delegate for table view, it fetches the data and pushes the data to detail view controller via artData
     
     @IBOutlet weak var articleTable: UITableView!
     
