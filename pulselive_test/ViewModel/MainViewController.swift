@@ -47,4 +47,24 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "DetailView") as! DetailViewController
+        
+        artData.fetchData(id: articlesPreview[indexPath.item].id) { article in
+            
+            vc.articleId = article.id
+            vc.articleTitle = article.title
+            vc.articleSubtitle = article.subtitle
+            vc.articleDate = article.date
+            vc.articleBody = article.body
+            self.present(vc, animated:true, completion:nil)
+
+        }
+        
+        
+    }
+    
 }

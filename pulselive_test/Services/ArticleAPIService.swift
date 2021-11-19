@@ -24,16 +24,16 @@ final class NetworkAPI: NetworkAPIProtocol {
             let json = JSON(data.data)
             for x in json {
                 
-                for n in x.1 {
-                    let id: Int = n.1["id"].intValue
-                    let title: String = n.1["title"].stringValue
-                    let subtitle: String = n.1["subtitle"].stringValue
-                    let body: String = n.1["body"].stringValue
-                    let date: String = n.1["date"].stringValue
+                
+                let id: Int = x.1["id"].intValue
+                let title: String = x.1["title"].stringValue
+                let subtitle: String = x.1["subtitle"].stringValue
+                let body: String = x.1["body"].stringValue
+                let date: String = x.1["date"].stringValue
 
-                    let article = ArticleExtended(id: id, title: title, subtitle: subtitle, date: date, body: body)
-                    completion(article)
-                }
+                let article = ArticleExtended(id: id, title: title, subtitle: subtitle, date: date, body: body)
+                completion(article)
+                
             }
         }
     }
