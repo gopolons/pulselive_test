@@ -19,24 +19,20 @@ protocol NetworkAPIProtocol {
 
 final class NetworkAPI: NetworkAPIProtocol {
     
+    let parser: DataParsingProtocol
+    
     func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended) -> Void) {
         let fullArticleRequest = AF.request("https://dynamic.pulselive.com/test/native/content/\(id).json")
         
         fullArticleRequest.responseJSON { (data) in
+            
+            
             let json = JSON(data.data)
-            for x in json {
-                
-                
-                let id: Int = x.1["id"].intValue
-                let title: String = x.1["title"].stringValue
-                let subtitle: String = x.1["subtitle"].stringValue
-                let body: String = x.1["body"].stringValue
-                let date: String = x.1["date"].stringValue
-
-                let article = ArticleExtended(id: id, title: title, subtitle: subtitle, date: date, body: body)
+            
+            self.parser.parseExtendedData(data: json) { article in
                 completion(article)
-                
             }
+
         }
     }
     
@@ -45,19 +41,17 @@ final class NetworkAPI: NetworkAPIProtocol {
         
         articleArrayRequest.responseJSON { (data) in
             let json = JSON(data.data)
-            for x in json {
-                
-                for n in x.1 {
-                    let id: Int = n.1["id"].intValue
-                    let title: String = n.1["title"].stringValue
-                    let subtitle: String = n.1["subtitle"].stringValue
-                    let date: String = n.1["date"].stringValue
-
-                    let preview = ArticlePreview(id: id, title: title, subtitle: subtitle, date: date)
-                    completion(preview)
-                }
+            
+            self.parser.parsePreviewData(data: json) { article in
+                completion(article)
             }
+            
         }
     }
+    
+    init(parser: DataParsingProtocol = DataParsing()) {
+        self.parser = parser
+    }
+    
 }
 

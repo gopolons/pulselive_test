@@ -11,6 +11,8 @@ class DetailViewController: UIViewController {
     
 //  This view controller receives data prior to segue from main view controller and displays article detail
     
+    var viewModel: DetailViewModel?
+    
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var id: UILabel!
@@ -21,28 +23,11 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var body: UILabel!
     
-    var articleId: Int?
-    
-    var articleTitle: String?
-    
-    var articleSubtitle: String?
-    
-    var articleDate: String?
-    
-    var articleBody: String?
-    
-    let artData = ArticleRepository()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.text = articleTitle
-        id.text = "\(articleId!)"
-        subtitle.text = articleSubtitle
-        date.text = articleDate
-        body.text = articleBody
+        viewModel!.viewDidLoad(idLabel: id, title: titleLabel, subtitle: subtitle, date: date, body: body)
         
-        // Do any additional setup after loading the view.
     }
 
 }
