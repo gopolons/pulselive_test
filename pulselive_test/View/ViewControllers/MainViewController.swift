@@ -8,7 +8,7 @@
 import UIKit
 import SPAlert
 
-//  This view controller is attached to MainViewModel, fetches data after viewDidLoad and displays the fetched data in a tableview
+//  This view controller is attached to MainViewModel, fetches data after viewDidLoad and displays the fetched data in a tableview. If data could not be fetched, it presents a button, which can reload viewDidLoad function.
 class MainViewController: UIViewController {
 
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!

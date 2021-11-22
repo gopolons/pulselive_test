@@ -10,8 +10,7 @@ import SPAlert
 
 class DetailViewController: UIViewController {
     
-//  This view controller receives modelData initiated in MainViewModel's navigate method, fetches and displays the article data
-    
+//  This view controller receives modelData initiated in MainViewModel's navigate method, fetches and displays the article data. If no data could be fetched (network error), it dismisses the view and presents an alert error
     var viewModel: DetailViewModel?
     
     @IBOutlet weak var titleLabel: UILabel!
