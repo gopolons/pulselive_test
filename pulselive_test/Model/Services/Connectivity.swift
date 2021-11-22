@@ -8,9 +8,11 @@
 import Foundation
 import Alamofire
 
+//  Struct that allows to check whether connection exists via alamofire
+
 struct Connectivity {
-  static let sharedInstance = NetworkReachabilityManager()!
-  static var isConnectedToInternet: Bool {
-      return self.sharedInstance.isReachable
+    static let sharedInstance = NetworkReachabilityManager()!
+    static var isConnectedToInternet: Bool {
+        return self.sharedInstance.isReachable
     }
 }

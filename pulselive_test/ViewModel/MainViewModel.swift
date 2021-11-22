@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SPAlert
 
 //  modelData used by MainViewController
 
@@ -15,7 +16,9 @@ final class MainViewModel {
     
     var articlesPreview: [ArticlePreview] = []
     
-    func viewDidLoad(table: UITableView, vc: UIViewController, indicator: UIActivityIndicatorView) {
+    func viewDidLoad(table: UITableView, vc: UIViewController, indicator: UIActivityIndicatorView, button: UIButton) {
+        
+        button.isHidden = true
         
         indicator.startAnimating()
         
@@ -23,8 +26,14 @@ final class MainViewModel {
         table.delegate = vc as? UITableViewDelegate
         
         
-        artData.fetchPreviewData { art in
-            self.articlesPreview.insert(art, at: 0)
+        artData.fetchPreviewData { art, err in
+            guard err == nil else {
+                indicator.hidesWhenStopped = true
+                indicator.stopAnimating()
+                button.isHidden = false
+                return
+            }
+            self.articlesPreview.insert(art!, at: 0)
             table.reloadData()
             indicator.hidesWhenStopped = true
             indicator.stopAnimating()

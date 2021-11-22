@@ -17,11 +17,6 @@ protocol NetworkAPIProtocol {
     func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended?, NetworkError?) -> Void)
 }
 
-enum NetworkError: Error {
-    case noConnection
-    case wrongReference
-}
-
 final class NetworkAPI: NetworkAPIProtocol {
     
     private let parser: DataParsingProtocol

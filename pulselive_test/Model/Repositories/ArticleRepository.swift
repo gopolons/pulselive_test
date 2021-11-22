@@ -11,9 +11,9 @@ import Foundation
 //Article repository is an interface used for fetching the data through network service (or otherwise, for testing purposes)
 
 protocol ArticleRepositoryProtocol {
-    func fetchData(id: Int, completion: @escaping (ArticleExtended) -> Void)
+    func fetchData(id: Int, completion: @escaping (ArticleExtended?, NetworkError?) -> Void)
     
-    func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void)
+    func fetchPreviewData(completion: @escaping (ArticlePreview?, NetworkError?) -> Void)
 
 }
 
@@ -21,41 +21,36 @@ final class ArticleRepository: ArticleRepositoryProtocol {
 
     private var apiService: NetworkAPIProtocol
     
-    func fetchData(id: Int, completion: @escaping (ArticleExtended) -> Void) {
+    func fetchData(id: Int, completion: @escaping (ArticleExtended?, NetworkError?) -> Void) {
         
         apiService.fetchFullArticle(id: id) { article, err in
             guard err == nil else {
                 switch err {
                 case .noConnection:
-                    print("no connection")
-                    return
-                case .wrongReference:
-                    print("wrong reference")
+                    completion(nil, NetworkError.noConnection)
                     return
                 default:
+                    completion(nil, NetworkError.wrongReference)
                     return
                 }
             }
-            completion(article!)
+            completion(article!, nil)
         }
     }
     
-    func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void) {
+    func fetchPreviewData(completion: @escaping (ArticlePreview?, NetworkError?) -> Void) {
         apiService.fetchPreviewData { article, err in
             guard err == nil else {
                 switch err {
                 case .noConnection:
-                    print("no connection")
-                    return
-                case .wrongReference:
-                    print("wrong reference")
+                    completion(nil, NetworkError.noConnection)
                     return
                 default:
+                    completion(nil, NetworkError.wrongReference)
                     return
                 }
-                return
             }
-            completion(article!)
+            completion(article!, nil)
         }
     }
     

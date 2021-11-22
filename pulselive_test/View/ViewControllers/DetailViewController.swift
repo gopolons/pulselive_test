@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SPAlert
 
 class DetailViewController: UIViewController {
     
@@ -25,10 +26,13 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     
+    let alertView = SPAlertView(title: "Error - data not found", preset: .error)
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel!.viewDidLoad(indicator: actIndicator, idLabel: id, title: titleLabel, subtitle: subtitle, date: date, body: body)
+        viewModel!.viewDidLoad(indicator: actIndicator, idLabel: id, title: titleLabel, subtitle: subtitle, date: date, body: body, alert: alertView, vc: self)
         
     }
 

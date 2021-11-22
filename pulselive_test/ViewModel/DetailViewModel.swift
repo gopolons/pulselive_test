@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SPAlert
 
 //  modelData used by DetailViewController
 
@@ -14,18 +15,25 @@ final class DetailViewModel {
     
     let artData: ArticleRepositoryProtocol
     
-    func viewDidLoad(indicator: UIActivityIndicatorView, idLabel: UILabel, title: UILabel, subtitle: UILabel, date: UILabel, body: UILabel) {
+    func viewDidLoad(indicator: UIActivityIndicatorView, idLabel: UILabel, title: UILabel, subtitle: UILabel, date: UILabel, body: UILabel, alert: SPAlertView, vc: UIViewController) {
         indicator.startAnimating()
-        artData.fetchData(id: id) { article in
+        artData.fetchData(id: id) { article, err in
+            guard err == nil else {
+                alert.present()
+                vc.dismiss(animated: true) {
+                    return
+                }
+                return
+            }
             idLabel.text = "\(self.id)"
             idLabel.isHidden = false
-            title.text = article.title
+            title.text = article!.title
             title.isHidden = false
-            subtitle.text = article.subtitle
+            subtitle.text = article!.subtitle
             subtitle.isHidden = false
-            date.text = article.date
+            date.text = article!.date
             date.isHidden = false
-            body.text = article.body
+            body.text = article!.body
             body.isHidden = false
             indicator.hidesWhenStopped = true
             indicator.stopAnimating()
