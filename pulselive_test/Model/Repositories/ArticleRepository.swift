@@ -22,14 +22,40 @@ final class ArticleRepository: ArticleRepositoryProtocol {
     private var apiService: NetworkAPIProtocol
     
     func fetchData(id: Int, completion: @escaping (ArticleExtended) -> Void) {
-        apiService.fetchFullArticle(id: id) { article in
-            completion(article)
+        
+        apiService.fetchFullArticle(id: id) { article, err in
+            guard err == nil else {
+                switch err {
+                case .noConnection:
+                    print("no connection")
+                    return
+                case .wrongReference:
+                    print("wrong reference")
+                    return
+                default:
+                    return
+                }
+            }
+            completion(article!)
         }
     }
     
     func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void) {
-        apiService.fetchPreviewData { article in
-            completion(article)
+        apiService.fetchPreviewData { article, err in
+            guard err == nil else {
+                switch err {
+                case .noConnection:
+                    print("no connection")
+                    return
+                case .wrongReference:
+                    print("wrong reference")
+                    return
+                default:
+                    return
+                }
+                return
+            }
+            completion(article!)
         }
     }
     

@@ -12,9 +12,9 @@ import Alamofire
 //Network API fetches the data from the remote depository
 
 protocol NetworkAPIProtocol {
-    func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void)
+    func fetchPreviewData(completion: @escaping (ArticlePreview?, NetworkError?) -> Void)
     
-    func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended) -> Void)
+    func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended?, NetworkError?) -> Void)
 }
 
 enum NetworkError: Error {
@@ -26,36 +26,50 @@ final class NetworkAPI: NetworkAPIProtocol {
     
     private let parser: DataParsingProtocol
     
-    func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended) -> Void) {
-        let fullArticleRequest = AF.request("https://dynamic.pulselive.com/test/native/content/\(id).json")
-        
-        fullArticleRequest.responseJSON { (data) in
+    func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended?, NetworkError?) -> Void) {
+        if Connectivity.isConnectedToInternet {
+            let fullArticleRequest = AF.request("https://dynamic.pulselive.com/test/native/content/\(id).json")
             
-            guard data.data != nil else {
-                return
-            }
-            
-            self.parser.parseExtendedData(data: data.data!) { article in
-                completion(article)
-            }
+            fullArticleRequest.responseJSON { (data) in
+                
+                guard data.error == nil else {
+                    completion(nil, NetworkError.wrongReference)
+                    return
+                }
+                
+                self.parser.parseExtendedData(data: data.data!) { article in
+                    completion(article, nil)
+                }
 
+            }
+        } else {
+            completion(nil, NetworkError.noConnection)
         }
+        
+        
     }
     
-    func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void) {
-        let articleArrayRequest = AF.request("https://dynamic.pulselive.com/test/native/contentList.json")
-        
-        articleArrayRequest.responseJSON { (data) in
+    func fetchPreviewData(completion: @escaping (ArticlePreview?, NetworkError?) -> Void) {
+        if Connectivity.isConnectedToInternet {
+            let articleArrayRequest = AF.request("https://dynamic.pulselive.com/test/native/contentList.json")
             
-            guard data.data != nil else {
-                return
+            articleArrayRequest.responseJSON { (data) in
+                
+                guard data.error == nil else {
+                    completion(nil, NetworkError.wrongReference)
+                    return
+                }
+                
+                self.parser.parsePreviewData(data: data.data!) { article in
+                    completion(article, nil)
+                }
+                
             }
-            
-            self.parser.parsePreviewData(data: data.data!) { article in
-                completion(article)
-            }
-            
+        } else {
+            completion(nil, NetworkError.noConnection)
         }
+        
+        
     }
     
     init(parser: DataParsingProtocol = DataParsing()) {
