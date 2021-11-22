@@ -23,10 +23,12 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var body: UILabel!
     
+    @IBOutlet weak var actIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel!.viewDidLoad(idLabel: id, title: titleLabel, subtitle: subtitle, date: date, body: body)
+        viewModel!.viewDidLoad(indicator: actIndicator, idLabel: id, title: titleLabel, subtitle: subtitle, date: date, body: body)
         
     }
 

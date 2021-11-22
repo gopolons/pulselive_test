@@ -15,7 +15,9 @@ final class MainViewModel {
     
     var articlesPreview: [ArticlePreview] = []
     
-    func viewDidLoad(table: UITableView, vc: UIViewController) {
+    func viewDidLoad(table: UITableView, vc: UIViewController, indicator: UIActivityIndicatorView) {
+        
+        indicator.startAnimating()
         
         table.dataSource = vc as? UITableViewDataSource
         table.delegate = vc as? UITableViewDelegate
@@ -24,12 +26,15 @@ final class MainViewModel {
         artData.fetchPreviewData { art in
             self.articlesPreview.insert(art, at: 0)
             table.reloadData()
-
+            indicator.hidesWhenStopped = true
+            indicator.stopAnimating()
+            
         }
     }
     
     func navigate(indexPath: IndexPath, currentVC: UIViewController) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
         let vc = storyBoard.instantiateViewController(withIdentifier: "DetailView") as! DetailViewController
         
         let index = articlesPreview[indexPath.item].id

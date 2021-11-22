@@ -10,14 +10,16 @@ import UIKit
 //  This view controller is attached to MainViewModel, fetches data after viewDidLoad and displays the fetched data in a tableview
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var actIndicator: UIActivityIndicatorView!
+    
     @IBOutlet weak var articleTable: UITableView!
     
     private let viewModel = MainViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.viewDidLoad(table: articleTable, vc: self)
+
+        viewModel.viewDidLoad(table: articleTable, vc: self, indicator: actIndicator)
         
     }
 
