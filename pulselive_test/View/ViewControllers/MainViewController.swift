@@ -7,12 +7,12 @@
 
 import UIKit
 
-//  This view controller acts as a delegate for table view, it fetches the data and pushes the data to detail view controller via artData
+//  This view controller is attached to MainViewModel, fetches data after viewDidLoad and displays the fetched data in a tableview
 class MainViewController: UIViewController {
 
     @IBOutlet weak var articleTable: UITableView!
     
-    let viewModel = MainViewModel()
+    private let viewModel = MainViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
 
 }
 
-//  This extensions assignes table data source and data delegate to main view controller (because it is the only element associated with this vc)
+//  This extensions assigns table data source and data delegate to main view controller (convenient -> it is the only element associated with this vc)
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -31,13 +31,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let art = viewModel.articlesPreview[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleTableViewCell") as! ArticleTableViewCell
-        
-        cell.setData(article: art)
-        
-        return cell
+        viewModel.generateCell(indexPath: indexPath, tableView: tableView)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

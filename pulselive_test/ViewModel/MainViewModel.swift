@@ -11,7 +11,7 @@ import UIKit
 
 final class MainViewModel {
     
-    let artData: ArticleRepositoryProtocol
+    private let artData: ArticleRepositoryProtocol
     
     var articlesPreview: [ArticlePreview] = []
     
@@ -29,7 +29,7 @@ final class MainViewModel {
     }
     
     func navigate(indexPath: IndexPath, currentVC: UIViewController) {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyBoard.instantiateViewController(withIdentifier: "DetailView") as! DetailViewController
         
         let index = articlesPreview[indexPath.item].id
@@ -38,6 +38,16 @@ final class MainViewModel {
 
         currentVC.present(vc, animated: true, completion: nil)
 
+    }
+    
+    func generateCell(indexPath: IndexPath, tableView: UITableView) -> (UITableViewCell) {
+        let art = self.articlesPreview[indexPath.row]
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ArticleTableViewCell") as! ArticleTableViewCell
+
+        cell.setData(article: art)
+
+        return cell
     }
     
     init(artData: ArticleRepositoryProtocol = ArticleRepository()) {

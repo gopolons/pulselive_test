@@ -19,7 +19,7 @@ protocol NetworkAPIProtocol {
 
 final class NetworkAPI: NetworkAPIProtocol {
     
-    let parser: DataParsingProtocol
+    private let parser: DataParsingProtocol
     
     func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended) -> Void) {
         let fullArticleRequest = AF.request("https://dynamic.pulselive.com/test/native/content/\(id).json")

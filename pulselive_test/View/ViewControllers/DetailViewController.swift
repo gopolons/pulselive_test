@@ -9,7 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-//  This view controller receives data prior to segue from main view controller and displays article detail
+//  This view controller receives modelData initiated in MainViewModel's navigate method, fetches and displays the article data
     
     var viewModel: DetailViewModel?
     

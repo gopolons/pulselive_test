@@ -7,6 +7,7 @@
 
 import UIKit
 
+//  a view controller for the cell in MainViewController's UITableview
 class ArticleTableViewCell: UITableViewCell {
     @IBOutlet weak var id: UILabel!
     
