@@ -10,14 +10,17 @@ import SwiftyJSON
 
 //  Data parsing service parses the JSON data into provided article models
 protocol DataParsingProtocol {
-    func parsePreviewData(data: JSON, completion: @escaping (ArticlePreview) -> Void)
+    func parsePreviewData(data: Data, completion: @escaping (ArticlePreview) -> Void)
     
-    func parseExtendedData(data: JSON, completion: @escaping (ArticleExtended) -> Void)
+    func parseExtendedData(data: Data, completion: @escaping (ArticleExtended) -> Void)
 }
 
 final class DataParsing: DataParsingProtocol {
-    func parsePreviewData(data: JSON, completion: @escaping (ArticlePreview) -> Void) {
-        for x in data {
+    func parsePreviewData(data: Data, completion: @escaping (ArticlePreview) -> Void) {
+        
+        let json = JSON(data)
+
+        for x in json {
             
             for n in x.1 {
                 let id: Int = n.1["id"].intValue
@@ -31,8 +34,11 @@ final class DataParsing: DataParsingProtocol {
         }
     }
     
-    func parseExtendedData(data: JSON, completion: @escaping (ArticleExtended) -> Void) {
-        for x in data {
+    func parseExtendedData(data: Data, completion: @escaping (ArticleExtended) -> Void) {
+        
+        let json = JSON(data)
+
+        for x in json {
             
             
             let id: Int = x.1["id"].intValue

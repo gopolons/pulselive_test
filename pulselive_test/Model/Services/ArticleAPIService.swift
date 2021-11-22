@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
+
 
 //Network API fetches the data from the remote depository
 
@@ -15,6 +15,11 @@ protocol NetworkAPIProtocol {
     func fetchPreviewData(completion: @escaping (ArticlePreview) -> Void)
     
     func fetchFullArticle(id: Int, completion: @escaping (ArticleExtended) -> Void)
+}
+
+enum NetworkError: Error {
+    case noConnection
+    case wrongReference
 }
 
 final class NetworkAPI: NetworkAPIProtocol {
@@ -26,10 +31,11 @@ final class NetworkAPI: NetworkAPIProtocol {
         
         fullArticleRequest.responseJSON { (data) in
             
+            guard data.data != nil else {
+                return
+            }
             
-            let json = JSON(data.data)
-            
-            self.parser.parseExtendedData(data: json) { article in
+            self.parser.parseExtendedData(data: data.data!) { article in
                 completion(article)
             }
 
@@ -40,9 +46,12 @@ final class NetworkAPI: NetworkAPIProtocol {
         let articleArrayRequest = AF.request("https://dynamic.pulselive.com/test/native/contentList.json")
         
         articleArrayRequest.responseJSON { (data) in
-            let json = JSON(data.data)
             
-            self.parser.parsePreviewData(data: json) { article in
+            guard data.data != nil else {
+                return
+            }
+            
+            self.parser.parsePreviewData(data: data.data!) { article in
                 completion(article)
             }
             
