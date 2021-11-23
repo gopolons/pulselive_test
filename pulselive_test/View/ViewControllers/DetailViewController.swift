@@ -25,7 +25,7 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     
-    let alertView = SPAlertView(title: "Error - data not found", preset: .error)
+    let alertView = SPAlertView(title: "Error - data not found, pull to refresh", preset: .error)
 
     override func viewDidLoad() {
         super.viewDidLoad()

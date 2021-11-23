@@ -32,7 +32,7 @@ final class ArticleRepository: ArticleRepositoryProtocol {
                 case .noConnection:
                     self.persistenceService.fetchFullArticle(id: id) { persistenceArt, persistenceErr in
                         guard persistenceErr == nil else {
-                            completion(nil, err)
+                            completion(nil, persistenceErr)
                             return
                         }
                         completion(persistenceArt, nil)
@@ -55,7 +55,7 @@ final class ArticleRepository: ArticleRepositoryProtocol {
                 case .noConnection:
                     self.persistenceService.fetchPreviewData { persistenceArt, persistenceErr in
                         guard persistenceErr == nil else {
-                            completion(nil, err)
+                            completion(nil, persistenceErr)
                             return
                         }
                         completion(persistenceArt, nil)

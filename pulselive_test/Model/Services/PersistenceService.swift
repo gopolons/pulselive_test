@@ -53,7 +53,11 @@ final class PersistenceService: PersistenceServiceProtocol {
         if data.isEmpty {
             completion(nil, NetworkError.noConnection)
         } else {
-            parser.convertToPreview(data) { art in
+            parser.convertToPreview(data) { art, err in
+                guard err == nil else {
+                    completion(nil, NetworkError.wrongReference)
+                    return
+                }
                 completion(art, nil)
             }
         }
@@ -66,7 +70,11 @@ final class PersistenceService: PersistenceServiceProtocol {
         if data.isEmpty {
             completion(nil, NetworkError.noConnection)
         } else {
-            parser.convertToExtended(data, id: id) { art in
+            parser.convertToExtended(data, id: id) { art, err in
+                guard err == nil else {
+                    completion(nil, NetworkError.wrongReference)
+                    return
+                }
                 completion(art, nil)
             }
         }

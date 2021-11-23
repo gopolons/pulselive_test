@@ -19,9 +19,9 @@ final class DetailViewModel {
         indicator.startAnimating()
         artData.fetchData(id: id) { article, err in
             guard err == nil else {
-                alert.present()
                 vc.dismiss(animated: true) {
-                    return
+                    alert.present()
+
                 }
                 return
             }

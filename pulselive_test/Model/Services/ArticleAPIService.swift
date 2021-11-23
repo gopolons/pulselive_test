@@ -38,7 +38,10 @@ final class NetworkAPI: NetworkAPIProtocol {
 
             }
         } else {
-            completion(nil, NetworkError.noConnection)
+            let seconds = 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                completion(nil, NetworkError.noConnection)
+            }
         }
         
         
