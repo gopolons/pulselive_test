@@ -110,7 +110,7 @@
         <scene sceneID="Vj1-qk-pkW">
             <objects>
                 <viewController storyboardIdentifier="DetailView" id="4xJ-ap-SSi" customClass="DetailViewController" customModule="pulselive_test" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="C9Q-nb-HSr" customClass="DetailV">
+                    <view key="view" contentMode="scaleToFill" id="C9Q-nb-HSr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

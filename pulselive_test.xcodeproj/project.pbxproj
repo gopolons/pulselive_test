@@ -32,6 +32,7 @@
 		94CDEC2B274BC9AB00B5CC1D /* DataParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CDEC2A274BC9AB00B5CC1D /* DataParsingService.swift */; };
 		94FB4611274C5216004148B6 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB4610274C5216004148B6 /* PersistenceService.swift */; };
 		94FB4614274C52E5004148B6 /* Articles.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 94FB4612274C52E5004148B6 /* Articles.xcdatamodeld */; };
+		94FB4616274C690E004148B6 /* PersistenceParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB4615274C690E004148B6 /* PersistenceParsingService.swift */; };
 		AB26E7825802C78E404A02BA /* Pods_pulselive_testTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 869A14B1AE71B4FA9614CA97 /* Pods_pulselive_testTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		94CDEC2A274BC9AB00B5CC1D /* DataParsingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataParsingService.swift; sourceTree = "<group>"; };
 		94FB4610274C5216004148B6 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		94FB4613274C52E5004148B6 /* Articles.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Articles.xcdatamodel; sourceTree = "<group>"; };
+		94FB4615274C690E004148B6 /* PersistenceParsingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceParsingService.swift; sourceTree = "<group>"; };
 		963FEE2B3525DBFB341BF9D0 /* Pods_pulselive_test_pulselive_testUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pulselive_test_pulselive_testUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		97FBC71308E10E20E753B2EC /* Pods-pulselive_test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pulselive_test.release.xcconfig"; path = "Target Support Files/Pods-pulselive_test/Pods-pulselive_test.release.xcconfig"; sourceTree = "<group>"; };
 		FA54B7552F4955E6D1F99D3C /* Pods-pulselive_test-pulselive_testUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pulselive_test-pulselive_testUITests.release.xcconfig"; path = "Target Support Files/Pods-pulselive_test-pulselive_testUITests/Pods-pulselive_test-pulselive_testUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -223,8 +225,8 @@
 		9444C9DA27469E710039E30E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				94FB4617274C6C82004148B6 /* Parsers */,
 				9444C9DB27469E820039E30E /* ArticleAPIService.swift */,
-				94CDEC2A274BC9AB00B5CC1D /* DataParsingService.swift */,
 				94FB4610274C5216004148B6 /* PersistenceService.swift */,
 				9422B6C7274C41A600EC0481 /* Connectivity.swift */,
 				9422B6C9274C43A000EC0481 /* NetworkError.swift */,
@@ -257,6 +259,15 @@
 				9444C9D02746931E0039E30E /* ArticlePreview.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		94FB4617274C6C82004148B6 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				94CDEC2A274BC9AB00B5CC1D /* DataParsingService.swift */,
+				94FB4615274C690E004148B6 /* PersistenceParsingService.swift */,
+			);
+			path = Parsers;
 			sourceTree = "<group>";
 		};
 		A085A27B340B1A0E29C442FE /* Pods */ = {
@@ -529,6 +540,7 @@
 				9444C9CF2746930A0039E30E /* ArticleExtended.swift in Sources */,
 				9422B6C8274C41A600EC0481 /* Connectivity.swift in Sources */,
 				94FB4611274C5216004148B6 /* PersistenceService.swift in Sources */,
+				94FB4616274C690E004148B6 /* PersistenceParsingService.swift in Sources */,
 				9444C99B27468CC90039E30E /* SceneDelegate.swift in Sources */,
 				94CDEC29274BC71000B5CC1D /* DetailViewModel.swift in Sources */,
 				94CDEC2B274BC9AB00B5CC1D /* DataParsingService.swift in Sources */,
