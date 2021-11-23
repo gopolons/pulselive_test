@@ -16,9 +16,9 @@ final class MainViewModel {
     
     var articlesPreview: [ArticlePreview] = []
     
-    func viewDidLoad(table: UITableView, vc: UIViewController, indicator: UIActivityIndicatorView, button: UIButton) {
-        
-        button.isHidden = true
+    func viewDidLoad(table: UITableView, vc: UIViewController, indicator: UIActivityIndicatorView, errorText: UILabel) {
+                
+        errorText.isHidden = true
         
         indicator.startAnimating()
         
@@ -30,13 +30,33 @@ final class MainViewModel {
             guard err == nil else {
                 indicator.hidesWhenStopped = true
                 indicator.stopAnimating()
-                button.isHidden = false
+                errorText.isHidden = false
                 return
             }
             self.articlesPreview.insert(art!, at: 0)
             table.reloadData()
             indicator.hidesWhenStopped = true
             indicator.stopAnimating()
+            
+        }
+    }
+    
+    func fetchData(table: UITableView, errorText: UILabel) {
+        articlesPreview.removeAll()
+
+        
+        artData.fetchPreviewData { art, err in
+            guard err == nil else {
+                if self.articlesPreview.isEmpty {
+                    table.reloadData()
+                    errorText.isHidden = false
+                }
+                return
+            }
+            errorText.isHidden = true
+            self.articlesPreview.insert(art!, at: 0)
+            table.reloadData()
+
             
         }
     }

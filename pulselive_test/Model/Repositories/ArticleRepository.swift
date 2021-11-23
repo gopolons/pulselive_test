@@ -17,9 +17,12 @@ protocol ArticleRepositoryProtocol {
 
 }
 
+//Article repository tries to fetch data from network api protocol, and if it fails due to network error, it attempts to use coredata storage to access stored data (which is stored on fetching article extended)
+
 final class ArticleRepository: ArticleRepositoryProtocol {
 
     private var apiService: NetworkAPIProtocol
+    private var persistenceService: PersistenceServiceProtocol
     
     func fetchData(id: Int, completion: @escaping (ArticleExtended?, NetworkError?) -> Void) {
         
@@ -27,13 +30,20 @@ final class ArticleRepository: ArticleRepositoryProtocol {
             guard err == nil else {
                 switch err {
                 case .noConnection:
-                    completion(nil, NetworkError.noConnection)
+                    self.persistenceService.fetchFullArticle(id: id) { persistenceArt, persistenceErr in
+                        guard persistenceErr == nil else {
+                            completion(nil, err)
+                            return
+                        }
+                        completion(persistenceArt, nil)
+                    }
                     return
                 default:
                     completion(nil, NetworkError.wrongReference)
                     return
                 }
             }
+            self.persistenceService.add(article!)
             completion(article!, nil)
         }
     }
@@ -43,7 +53,13 @@ final class ArticleRepository: ArticleRepositoryProtocol {
             guard err == nil else {
                 switch err {
                 case .noConnection:
-                    completion(nil, NetworkError.noConnection)
+                    self.persistenceService.fetchPreviewData { persistenceArt, persistenceErr in
+                        guard persistenceErr == nil else {
+                            completion(nil, err)
+                            return
+                        }
+                        completion(persistenceArt, nil)
+                    }
                     return
                 default:
                     completion(nil, NetworkError.wrongReference)
@@ -54,8 +70,9 @@ final class ArticleRepository: ArticleRepositoryProtocol {
         }
     }
     
-    init(apiService: NetworkAPIProtocol = NetworkAPI()) {
+    init(apiService: NetworkAPIProtocol = NetworkAPI(), persistenceService: PersistenceServiceProtocol = PersistenceService()) {
         self.apiService = apiService
+        self.persistenceService = persistenceService
     }
 
 }

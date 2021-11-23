@@ -27,7 +27,6 @@ class DetailViewController: UIViewController {
     
     let alertView = SPAlertView(title: "Error - data not found", preset: .error)
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

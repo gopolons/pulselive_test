@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SPAlert
 
 //  This view controller is attached to MainViewModel, fetches data after viewDidLoad and displays the fetched data in a tableview. If data could not be fetched, it presents a button, which can reload viewDidLoad function.
 class MainViewController: UIViewController {
@@ -15,20 +14,27 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var articleTable: UITableView!
     
-    @IBAction func reloadButton(_ sender: UIButton) {
-        viewModel.viewDidLoad(table: articleTable, vc: self, indicator: actIndicator, button: buttonOutlet)
-    }
-    
-    @IBOutlet weak var buttonOutlet: UIButton!
-    
+    @IBOutlet weak var errorText: UILabel!
     
     private let viewModel = MainViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let refreshControl = UIRefreshControl()
 
-        viewModel.viewDidLoad(table: articleTable, vc: self, indicator: actIndicator, button: buttonOutlet)
+        articleTable.refreshControl = refreshControl
+        
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
 
+        viewModel.viewDidLoad(table: articleTable, vc: self, indicator: actIndicator, errorText: errorText)
+        
+    }
+    
+    @objc func refresh(refreshControl: UIRefreshControl) {
+        viewModel.fetchData(table: articleTable, errorText: errorText)
+        
+        refreshControl.endRefreshing()
     }
 
 }
